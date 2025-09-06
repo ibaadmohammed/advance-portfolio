@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohammed Mohtashim Ibaad - IT Student & Web Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: slideUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(80px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+            color: white;
+            padding: 80px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-conic-gradient(
+                from 0deg at 50% 50%,
+                transparent 0deg 30deg,
+                rgba(255,255,255,0.05) 30deg 60deg
+            );
+            animation: rotate 25s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .profile-section {
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile-img:hover {
+            transform: scale(1.1) rotate(360deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-img::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1) border-box;
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask-composite: subtract;
+            animation: borderRotate 3s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .name {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(45deg, #fff, #f0f8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .title {
+            font-size: 1.5em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.8;
+            position: relative;
+            z-index: 2;
+            font-style: italic;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .sidebar {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f1f3f4 100%);
+            padding: 50px 40px;
+        }
+
+        .main-content {
+            padding: 50px 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.2s; }
+        .section:nth-child(2) { animation-delay: 0.4s; }
+        .section:nth-child(3) { animation-delay: 0.6s; }
+        .section:nth-child(4) { animation-delay: 0.8s; }
+        .section:nth-child(5) { animation-delay: 1.0s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3498db;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title:hover {
+            color: #3498db;
+            transform: translateX(10px);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #e74c3c, #f39c12);
+            transition: width 0.4s ease;
+        }
+
+        .section-title:hover::after {
+            width: 100%;
+        }
+
+        .section-icon {
+            font-size: 0.8em;
+            padding: 8px;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            border-radius: 10px;
+            color: white;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid transparent;
+        }
+
+        .contact-info li:hover {
+            transform: translateX(15px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-left-color: #3498db;
+        }
+
+        .contact-info li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .contact-info li:hover::before {
+            left: 100%;
+        }
+
+        .skill-category {
+            margin-bottom: 30px;
+        }
+
+        .skill-category h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-bar {
+            margin-bottom: 20px;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #34495e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .skill-level {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-weight: normal;
+        }
+
+        .skill-progress {
+            background: #ecf0f1;
+            border-radius: 15px;
+            height: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12);
+            border-radius: 15px;
+            width: 0;
+            transition: width 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .education-item {
+            margin-bottom: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            border: 1px solid rgba(52, 152, 219, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: #3498db;
+        }
+
+        .education-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12);
+            transition: left 0.5s ease;
+        }
+
+        .education-item:hover::before {
+            left: 0;
+        }
+
+        .degree {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+        }
+
+        .school {
+            color: #3498db;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .duration {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .achievement {
+            color: #27ae60;
+            font-weight: 500;
+            background: rgba(46, 204, 113, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+        }
+
+        .about-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #34495e;
+            text-align: justify;
+            margin-bottom: 20px;
+            position: relative;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.05), rgba(46, 204, 113, 0.05));
+            border-radius: 15px;
+            border-left: 4px solid #3498db;
+        }
+
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .interest-tag {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .interest-tag:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .action-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .action-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .print-btn {
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #e74c3c, #f39c12);
+        }
+
+        .action-btn:hover {
+            transform: scale(1.2) rotate(10deg);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: floatUp 8s infinite ease-in-out;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                margin: 10px;
+            }
+            
+            .header {
+                padding: 60px 30px;
+            }
+            
+            .name {
+                font-size: 2.5em;
+            }
+            
+            .sidebar, .main-content {
+                padding: 30px 25px;
+            }
+            
+            .action-buttons {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            .action-buttons, .floating-elements, .bg-animation {
+                display: none;
+            }
+            
+            .header::before {
+                display: none;
+            }
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-8px);
+            border-color: #3498db;
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.2);
+        }
+
+        .tech-icon {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+
+        .typing-effect {
+            border-right: 2px solid rgba(255, 255, 255, 0.7);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: transparent; }
+            51%, 100% { border-color: rgba(255, 255, 255, 0.7); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation" id="bgAnimation"></div>
+    <div class="floating-elements" id="floatingElements"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="profile-section">
+                <div class="profile-img">MI</div>
+                <h1 class="name typing-effect" id="nameElement">Mohammed Mohtashim Ibaad</h1>
+                <p class="title">Information Technology Student</p>
+                <p class="subtitle">Passionate Web Developer & Tech Enthusiast</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="sidebar">
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">📧</span>
+                        Contact
+                    </h2>
+                    <ul class="contact-info">
+                        <li>📧 thebestduo497@gmail.com</li>
+                        <li>📱 +91 8977250192</li>
+                        <li>🏠 Hyderabad, Telangana, India</li>
+                        <li>💼 linkedin.com/in/ibaad mohammed</li>
+                        <li>🌐 <github class="com">
+                        <ibaadmohammed></ibaadmohammed></li>
+                        <li>🔗 my-website-main.vercel.app</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">💻</span>
+                        Technical Skills
+                    </h2>
+                    
+                    <div class="skill-category">
+                        <h3>🌐 Web Development</h3>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                HTML5/CSS3
+                                <span class="skill-level">Advanced</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-fill" data-skill="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                JavaScript
+                                <span class="skill-level">Intermediate</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-fill" data-skill="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                React.js
+                                <span class="skill-level">Learning</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-fill" data-skill="60"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>💾 Programming</h3>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                Python
+                                <span class="skill-level">Intermediate</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-fill" data-skill="70"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                Java
+                                <span class="skill-level">Intermediate</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-fill" data-skill="65"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                Data Structures
+                                <span class="skill-level">Learning</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-fill" data-skill="55"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>🤖 Emerging Tech</h3>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                Machine Learning
+                                <span class="skill-level">Beginner</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-fill" data-skill="40"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-name">
+                                Database (SQL)
+                                <span class="skill-level">Learning</span>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-fill" data-skill="50"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">🛠️</span>
+                        Tech Stack
+                    </h2>
+                    <div class="tech-stack">
+                        <div class="tech-item">
+                            <div class="tech-icon">🌐</div>
+                            <div>HTML/CSS</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚡</div>
+                            <div>JavaScript</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚛️</div>
+                            <div>React</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🐍</div>
+                            <div>Python</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">☕</div>
+                            <div>Java</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🗄️</div>
+                            <div>SQL</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">👨‍💻</span>
+                        About Me
+                    </h2>
+                    <p class="about-text">
+                        Hi! I'm a passionate Information Technology student currently in my 3rd year at Muffakham Jha College of Engineering and Technology. 
+                        I have a deep love for building websites and developing applications that solve real-world problems. My journey in technology is driven by 
+                        curiosity and a constant desire to learn and grow.
+                    </p>
+                    <p class="about-text">
+                        I specialize in web development, with a focus on creating responsive, user-friendly interfaces. I'm also expanding my knowledge in 
+                        data structures, algorithms, and machine learning. In my free time, I enjoy reading tech blogs, experimenting with new frameworks, 
+                        and working on personal projects that challenge my skills.
+                    </p>
+                    
+                    <div class="interests">
+                        <span class="interest-tag">🌐 Web Development</span>
+                        <span class="interest-tag">📱 Mobile Apps</span>
+                        <span class="interest-tag">🤖 Machine Learning</span>
+                        <span class="interest-tag">💡 Innovation</span>
+                        <span class="interest-tag">📚 Continuous Learning</span>
+                        <span class="interest-tag">👥 Collaboration</span>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">🎓</span>
+                        Education
+                    </h2>
+                    
+                    <div class="education-item">
+                        <div class="degree">Bachelor of Technology in Information Technology</div>
+                        <div class="school">Muffakham Jha College of Engineering and Technology</div>
+                        <div class="duration">2022 - 2026 (Expected)</div>
+                        <p>Developed and deployed a responsive personal portfolio showcasing my skills, projects, and journey as an IT student. 
+                           Built with modern web technologies and hosted on Vercel with clean, user-friendly design.</p>
+                        <div class="achievement">💻 Live Portfolio - Responsive Design</div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="degree">Web Development Projects</div>
+                        <div class="school">Academic & Personal</div>
+                        <div class="duration">2023 - Present</div>
+                        <p>Created multiple web applications using HTML, CSS, JavaScript, and React. Focus on responsive design, 
+                           user experience, and modern development practices.</p>
+                        <div class="achievement">🌐 Multiple Live Projects</div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="degree">Data Structures & Algorithms Practice</div>
+                        <div class="school">Self-Learning & College</div>
+                        <div class="duration">2023 - Present</div>
+                        <p>Actively solving coding problems and implementing various data structures in Python and Java. 
+                           Regular practice on coding platforms to strengthen problem-solving skills.</p>
+                        <div class="achievement">💪 Problem Solving Focus</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">🎯</span>
+                        Goals & Aspirations
+                    </h2>
+                    <p class="about-text">
+                        <strong>Short-term Goals:</strong> Master advanced JavaScript frameworks, complete machine learning projects, 
+                        and contribute to open-source projects. Build a strong portfolio of web applications.
+                    </p>
+                    <p class="about-text">
+                        <strong>Long-term Vision:</strong> Become a skilled full-stack developer with expertise in modern technologies. 
+                        Eventually lead development teams and create innovative solutions that make a positive impact on society.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="action-buttons">
+        <button class="action-btn download-btn" onclick="downloadResume()" title="Download PDF">📄</button>
+        <button class="action-btn print-btn" onclick="window.print()" title="Print Resume">🖨️</button>
+    </div>
+    
+    <script>
+        // Create animated background particles
+        function createBackgroundParticles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                bgAnimation.appendChild(particle);
+            }
+        }
+
+        // Create floating elements
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            
+            const createFloatingElement = () => {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.animationDelay = Math.random() * 8 + 's';
+                container.appendChild(element);
+                
+                setTimeout(() => {
+                    element.remove();
+                }, 8000);
+            };
+            
+            setInterval(createFloatingElement, 1000);
+        }
+
+        // Typing effect for name
+        function typeWriterEffect() {
+            const nameElement = document.getElementById('nameElement');
+            const originalText = 'Mohammed Mohtashim Ibaad';
+            nameElement.textContent = '';
+            nameElement.classList.remove('typing-effect');
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    nameElement.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                } else {
+                    nameElement.classList.add('typing-effect');
+                }
+            };
+            
+            setTimeout(typeWriter, 1500);
+        }
+
+        // Animate skill bars on scroll
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-fill');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const skillLevel = entry.target.getAttribute('data-skill');
+                        entry.target.style.width = skillLevel + '%';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            skillBars.forEach(bar => observer.observe(bar));
+        }
+
+        // Add hover effects to sections
+        function addSectionHoverEffects() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                section.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        }
+
+        // Add sparkle effect on contact items
+        function addSparkleEffects() {
+            const contactItems = document.querySelectorAll('.contact-info li');
+            contactItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    const sparkle = document.createElement('div');
+                    sparkle.style.position = 'absolute';
+                    sparkle.style.left = e.offsetX + 'px';
+                    sparkle.style.top = e.offsetY + 'px';
+                    sparkle.style.width = '6px';
+                    sparkle.style.height = '6px';
+                    sparkle.style.background = '#ffd700';
+                    sparkle.style.borderRadius = '50%';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.style.zIndex = '1000';
+                    sparkle.style.animation = 'sparkleEffect 0.8s ease-out forwards';
+                    
+                    this.style.position = 'relative';
+                    this.appendChild(sparkle);
+                    
+                    setTimeout(() => sparkle.remove(), 800);
+                });
+            });
+        }
+
+        // Add CSS for sparkle effect
+        function addSparkleCSS() {
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes sparkleEffect {
+                    0% {
+                        transform: scale(0) rotate(0deg);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: scale(4) rotate(180deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Smooth scroll for section titles
+        function addSmoothScrolling() {
+            const sectionTitles = document.querySelectorAll('.section-title');
+            sectionTitles.forEach(title => {
+                title.addEventListener('click', function() {
+                    const section = this.parentElement;
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        }
+
+        // Download resume function
+        function downloadResume() {
+            // Create a temporary link element
+            const link = document.createElement('a');
+            link.href = '#';
+            link.download = 'Mohammed_Mohtashim_Ibaad_Resume.pdf';
+            
+            // Show a message since we can't actually generate PDF in this environment
+            alert('To download the PDF version, please use your browser\'s print function and select "Save as PDF"');
+            
+            // Alternative: trigger print dialog
+            window.print();
+        }
+
+        // Add pulse effect to profile image
+        function addProfilePulseEffect() {
+            const profileImg = document.querySelector('.profile-img');
+            profileImg.addEventListener('click', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'pulse 0.6s ease-in-out';
+                }, 10);
+            });
+        }
+
+        // Add CSS for pulse effect
+        function addPulseCSS() {
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.1); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Initialize all effects when page loads
+        window.addEventListener('load', function() {
+            createBackgroundParticles();
+            createFloatingElements();
+            typeWriterEffect();
+            animateSkillBars();
+            addSectionHoverEffects();
+            addSparkleEffects();
+            addSparkleCSS();
+            addSmoothScrolling();
+            addProfilePulseEffect();
+            addPulseCSS();
+        });
+
+        // Add scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const scrollObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Progressive loading of sections
+        setTimeout(() => {
+            document.querySelectorAll('.section').forEach(section => {
+                scrollObserver.observe(section);
+            });
+        }, 100);
+
+        // Add custom cursor effect for interactive elements
+        function addCustomCursor() {
+            const cursor = document.createElement('div');
+            cursor.style.cssText = `
+                position: fixed;
+                width: 20px;
+                height: 20px;
+                background: rgba(52, 152, 219, 0.3);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                mix-blend-mode: multiply;
+                transition: transform 0.1s ease;
+            `;
+            document.body.appendChild(cursor);
+
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+            });
+
+            const interactiveElements = document.querySelectorAll('button, .contact-info li, .education-item, .tech-item, .section-title');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(2)';
+                    cursor.style.background = 'rgba(231, 76, 60, 0.3)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                    cursor.style.background = 'rgba(52, 152, 219, 0.3)';
+                });
+            });
+        }
+
+        // Initialize custom cursor on desktop
+        if (window.innerWidth > 768) {
+            addCustomCursor();
+        }
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'p' && e.ctrlKey) {
+                e.preventDefault();
+                window.print();
+            }
+        });
+
+        console.log('🚀 Mohammed Mohtashim Ibaad - Resume Loaded Successfully!');
+        console.log('💻 Interactive features activated!');
+        console.log('🎯 Ready to showcase skills and experience!');
+    </script>
+</body>
+</html>Currently in 3rd Year, focusing on Web Development, Data Structures, and Machine Learning. 
+                           Actively participating in coding competitions and tech workshops.</p>
+                        <div class="achievement">🎯 Current Focus: Advanced Web Development & ML</div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="degree">Intermediate (12th Grade) - MPC Stream</div>
+                        <div class="school">Sri Chaitanya Junior College</div>
+                        <div class="duration">2020 - 2022</div>
+                        <p>Studied Mathematics, Physics, and Chemistry with strong analytical and problem-solving foundation.</p>
+                        <div class="achievement">🏆 Scored 84% - Mathematics, Physics & Chemistry</div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="degree">Secondary School (10th Grade)</div>
+                        <div class="school">Iqbalia International School</div>
+                        <div class="duration">2019 - 2020</div>
+                        <p>Completed CBSE Board with excellent academic performance and developed strong foundational skills.</p>
+                        <div class="achievement">🌟 CBSE Board - 9.0 GPA</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">
+                        <span class="section-icon">🚀</span>
+                        Projects & Experience
+                    </h2>
+                    
+                    <div class="education-item">
+                        <div class="degree">Personal Portfolio Website</div>
+                        <div class="school">my-website-main.vercel.app</div>
+                        <div class="duration">2024 - Ongoing</div>
+                        <p>Designed and developed a personal portfolio website to showcase my skills, projects, and journey as an IT student. 
+                           Built with modern web technologies and hosted on Vercel with a focus on responsive design and user
