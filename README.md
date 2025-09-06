@@ -1,7 +1,7 @@
 # advance-portfolio
 ✨ Advanced Features:
 🎨 Visual Design:
-
+https://advance-portfolio-five.vercel.app/
 Modern glassmorphism design with animated gradients
 Floating particles and animated background elements
 Interactive profile picture with rotation and pulse effects
@@ -54,3 +54,12 @@ Keyboard shortcuts (Ctrl+P to print)
 Mobile-responsive design
 
 This resume perfectly captures your journey as an IT student passionate about web development and emerging technologies. You can easily customize the contact information, add more projects, or modify the skills based on your current progress!RetryClaude can make mistakes. Please double-check responses.
+
+
+
+
+
+
+
+
+
